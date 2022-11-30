@@ -1,0 +1,324 @@
+openapi: "3.0.0"
+info:
+  description: "API « Organisation face au client » de EDH qui doit retourner les\
+    \ Contacts Orange du client (entreprise , établissement ou groupe commercial)"
+  version: "0.2.0_inProgress"
+  title: "OrangeCustomerServiceRepresentatives"
+tags:
+- name: "V1"
+- name: "Ready"
+paths:
+  /v1/{v1Id}:
+    get:
+      tags:
+      - "V1"
+      operationId: "v1Get"
+      summary: "get v1"
+      description: "\nExposition EDH pour Nacre\n\nLes données d'EDH sont exposées\
+        \ via une API pour Nacre\n"
+      parameters:
+      - name: "v1Id"
+        required: true
+        in: "path"
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Ok"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Nacre"
+        "400":
+          description: "Bad Request\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "404":
+          description: "Not Found\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "405":
+          description: "Method Not Allowed\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "422":
+          description: "Unprocessable entity\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "500":
+          description: "Internal Server Error\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "503":
+          description: "Service Unavailable\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+  /v1/nacre/id/{id}:
+    get:
+      tags:
+      - "V1"
+      operationId: "get_by_id_v1_nacre_id__id__get"
+      summary: "Find by Id"
+      description: "A completer"
+      parameters:
+      - name: "id"
+        required: true
+        in: "path"
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "Ok"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Nacre"
+        "400":
+          description: "Bad Request\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "404":
+          description: "Not Found\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "405":
+          description: "Method Not Allowed\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "422":
+          description: "Unprocessable entity\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "500":
+          description: "Internal Server Error\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "503":
+          description: "Service Unavailable\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+  /ready:
+    get:
+      tags:
+      - "Ready"
+      operationId: "test_ready_get"
+      summary: "Test"
+      responses:
+        "200":
+          description: "Ok"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/"
+        "400":
+          description: "Bad Request\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "404":
+          description: "Not Found\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "405":
+          description: "Method Not Allowed\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "422":
+          description: "Unprocessable entity\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "500":
+          description: "Internal Server Error\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "503":
+          description: "Service Unavailable\n\n"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+components:
+  schemas:
+    BusinessTransaction:
+      type: "object"
+      properties:
+        type:
+          description: "Type de transaction CRM, liste de valeurs : Dossier de recouvrement,\
+            \ Demande, Commande, Opportunité, …"
+          type: "string"
+        category:
+          description: "Business transaction category pour type dunninCase: Univers\
+            \ du dossier de recouvrement (Fixe ou Mobile)"
+          type: "string"
+    ContactMedium:
+      type: "object"
+      properties:
+        emailAddress:
+          description: "email address"
+          type: "string"
+        telephoneNumber:
+          description: "phone number"
+          type: "string"
+    CustomerService:
+      type: "object"
+      properties:
+        id:
+          description: "Parent customer service id "
+          type: "string"
+        type:
+          description: "Si EDG : entité de rattachement de l’acteur Orange Si EDS\
+            \ : équipe de rattachement de l’acteur Orange"
+          type: "string"
+        name:
+          description: "Customer service name "
+          type: "string"
+        parentCustomerService:
+          $ref: "#/components/schemas/ParentCustomerService"
+        organization:
+          $ref: "#/components/schemas/Organization"
+    CustomerServiceRepresentative:
+      type: "object"
+      properties:
+        nationalId:
+          description: "Code alliance (identifiant) de l’acteur Orange dans le systè\
+            me d’information"
+          type: "string"
+        familyName:
+          description: "Nom de famille de l’acteur Orange"
+          type: "string"
+        givenName:
+          description: "Prénom de l’acteur Orange"
+          type: "string"
+        organization:
+          $ref: "#/components/schemas/Organization"
+        domain:
+          description: "Domaine du rôle"
+          type: "string"
+        function:
+          description: "fonction du rôle"
+          type: "string"
+        customerService:
+          $ref: "#/components/schemas/CustomerService"
+        contactMedium:
+          $ref: "#/components/schemas/ContactMedium"
+        businessTransactions:
+          description: "Objet du système d’information qui représente une relation/un\
+            \ échange entre Orange et une organisation (cliente ou prospect)"
+          type: "array"
+          items:
+            $ref: "#/components/schemas/BusinessTransaction"
+    CustomerServiceRepresentativeRole:
+      type: "object"
+      properties:
+        type:
+          description: "salesRep: Acteur Vente e-force, rel_type_id = 30003 / careRep:\
+            \ Conseillé Dédié e-force, rel_type_id = 30514 / billingRep: Chargé de\
+            \ Facturation e-force, rel_type_id = 30005 / dunningRep: Chargé de Recouvrement,\
+            \ Sacre, chargé de Recouvrement associé au dossier de recouvrement actif\n\
+            / otherRep: Autre acteurs e-force, rel_type_id = 32"
+          type: "string"
+        name:
+          type: "string"
+        customerServiceRepresentatives:
+          description: "Acteur Orange en charge du client dans le cadre d’un rôle\
+            \ donné. Cet acteur qui représente Orange peut être interne (employée\
+            \ Orange) ou externe (employé d’un prestataire)"
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CustomerServiceRepresentative"
+        customerServices:
+          description: "Service organisation"
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CustomerService"
+    HTTPValidationError:
+      type: "object"
+      properties:
+        detail:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ValidationError"
+    Nacre:
+      description: "API « Organisation face au client » de EDH qui doit retourner\
+        \ les Contacts Orange du client (entreprise , établissement ou groupe commercial)"
+      required:
+      - "organization"
+      type: "object"
+      properties:
+        organization:
+          $ref: "#/components/schemas/Organization"
+        customerServiceRepresentativeRoles:
+          description: "Rôle de l’acteur Orange vis-à-vis de l’organisation "
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CustomerServiceRepresentativeRole"
+    Organization:
+      description: "Identifiant de l’organisation pour laquelle l’acteur ou le service\
+        \  Orange a un rôle"
+      type: "object"
+      properties:
+        id:
+          description: "Identifiant de l’organisation"
+          type: "string"
+    ParentCustomerService:
+      type: "object"
+      properties:
+        id:
+          description: "Parent customer service id "
+          type: "string"
+        type:
+          description: "Si EDG : entité de rattachement de l’acteur Orange Si EDS\
+            \ : équipe de rattachement de l’acteur Orange"
+          type: "string"
+        name:
+          description: "Parent customer service name "
+          type: "string"
+    ValidationError:
+      required:
+      - "loc"
+      - "msg"
+      - "type"
+      type: "object"
+      properties:
+        loc:
+          type: "array"
+          items:
+            type: "string"
+        msg:
+          type: "string"
+        type:
+          type: "string"
+    clientCredentials: {}
